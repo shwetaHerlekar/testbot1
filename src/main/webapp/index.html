@@ -1,11 +1,39 @@
 <!DOCTYPE html>
- <html>
- <head>
- <meta charset="UTF-8">
- <title>Insert title here</title>
- </head>
- <body>
- Welcome..........
- <a href="./ai.html">Chat Example</a>
- </body>
- </html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ask...</title>
+<script>
+function sendRequest{
+var tinput = document.getElementById("user-input");
+text = tinput.value;
+tinput.value = "";
+
+var div = document.getElementById("box");
+var p = document.createElement('p');
+p.innerHTML = text; 
+
+var http = new XMLHttpRequest();
+var url="ai?query="+text;
+http.open("GET", url, true);
+var br = document.createElement('br');
+p.appendChild(br);
+
+div.appendChild(p);
+var div = document.getElementById("box");
+var p = document.createElement('p');
+p.innerHTML = http.responseText;
+
+var br = document.createElement('br');
+p.appendChild(br);
+
+div.appendChild(p);
+}
+</script>
+</head>
+<body>
+	<div id="box" style="width: 400px; border: 2px solid; height: 570px;"></div>
+	<input type="text" id="user-input" style="width: 400px;" />
+	<input type="button" value="submit" onclick="sendRequest()" />
+</body>
+</html>
