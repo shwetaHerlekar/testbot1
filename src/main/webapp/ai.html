@@ -11,7 +11,7 @@
 </style>
 </head>
 <body>
-	<h2>Api.ai Text Request Example demo</h2>
+	<h2>Api.ai Text Request  demo</h2>
 	<form id="webhookForm" onsubmit="return false;">
 	    <div>
 	       <span>Query:</span>
@@ -40,7 +40,6 @@
 			
 			var formData = "query=" + encodeURIComponent(query);
 			xhr.send(formData);
-			console.log(e.target.responseText)
 			xhr.onloadend = function(e) {
 				form.elements['button'].disabled = false;
 				console.log(e.target.responseText);
