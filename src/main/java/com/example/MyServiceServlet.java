@@ -27,7 +27,8 @@ public class MyServiceServlet extends AIServiceServlet {
     try {
       AIResponse aiResponse = request(request.getParameter("query"), request.getSession());
       response.setContentType("text/plain");
-      response.getWriter().append(aiResponse.getResult().getFulfillment().getSpeech());
+      response.getWriter().append("Hello");
+      //aiResponse.getResult().getFulfillment().getSpeech()
     } catch (AIServiceException e) {
       e.printStackTrace();
     }
