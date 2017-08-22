@@ -16,7 +16,7 @@ import ai.api.web.AIServiceServlet;
 @WebServlet(urlPatterns = {"/ai"},
     initParams = {
         @WebInitParam(name = MyServiceServlet.PARAM_API_AI_KEY,
-        value = "36e0d78753284c17ada1711f2dc6fc25")
+        value = "c52536d801de4975a86024f33e87b511")
     })
 public class MyServiceServlet extends AIServiceServlet {
   /**
