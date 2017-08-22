@@ -34,7 +34,7 @@
             form.elements['response'].value += "\n> " + query;
             form.elements['response'].scrollTop = form.elements['response'].scrollHeight 
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "ai", true);
+			xhr.open("POST", "/ai", true);
 			console.log("Post req ")
 			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			
@@ -42,6 +42,7 @@
 			xhr.send(formData);
 			xhr.onloadend = function(e) {
 				form.elements['button'].disabled = false;
+				consloe.log(e.target.responseText);
 				form.elements['response'].value += "\n" + e.target.responseText;
 				form.elements['response'].scrollTop = form.elements['response'].scrollHeight
 			};
