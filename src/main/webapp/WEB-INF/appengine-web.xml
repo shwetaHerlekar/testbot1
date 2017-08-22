@@ -2,6 +2,6 @@
 
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <application>poc-iot</application>
-  <version>beta-002</version>
+  <version>beta-003</version>
   <threadsafe>true</threadsafe>
 </appengine-web-app>
