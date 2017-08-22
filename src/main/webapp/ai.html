@@ -33,7 +33,7 @@
 			form.elements['button'].disabled = true;
             form.elements['response'].value += "\n> " + query;
             form.elements['response'].scrollTop = form.elements['response'].scrollHeight 
-		/*	var xhr = new XMLHttpRequest();
+			var xhr = new XMLHttpRequest();
 		 	xhr.open("POST", "/ai", true);
 			console.log("Post req ")
 			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -45,8 +45,8 @@
 				consloe.log(e.target.responseText);
 				form.elements['response'].value += "\n" + e.target.responseText;
 				form.elements['response'].scrollTop = form.elements['response'].scrollHeight
-			}; */
-			 var xhttp = new XMLHttpRequest();
+			}; 
+		/* 	 var xhttp = new XMLHttpRequest();
 			  xhttp.onreadystatechange = function() {
 			    if (this.readyState == 4 && this.status == 200) {
 			    //  document.getElementById("demo").innerHTML = this.responseText;
@@ -57,7 +57,7 @@
 			    }
 			  };
 			  xhttp.open("POST", "ai", true);
-			  xhttp.send();
+			  xhttp.send(); */
 			return false;
 		}
 	</script>

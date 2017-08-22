@@ -12,7 +12,7 @@
     <servlet-name>ai</servlet-name>
     <servlet-class>com.example.MyServiceServlet</servlet-class>
     <init-param>
-        <param-name>MyServiceServlet.PARAM_API_AI_KEY</param-name>
+        <param-name>clientAccessToken</param-name>
         <param-value>c52536d801de4975a86024f33e87b511</param-value>
         </init-param>
   </servlet>
