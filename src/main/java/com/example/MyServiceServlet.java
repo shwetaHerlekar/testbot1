@@ -29,7 +29,7 @@ public class MyServiceServlet extends AIServiceServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static final String PARAM_API_AI_KEY = "apiaiKey";
+	public static final String PARAM_API_AI_KEY = "c52536d801de4975a86024f33e87b511";
 
 	private AIDataService aiDataService;
 	  @Override
