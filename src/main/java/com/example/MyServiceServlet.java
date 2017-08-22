@@ -27,7 +27,7 @@ public class MyServiceServlet extends AIServiceServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 			if (request.getParameter("sessionKey").isEmpty()) {
