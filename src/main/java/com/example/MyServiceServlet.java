@@ -1,5 +1,6 @@
 package com.example;
 
+import java.io.Console;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,8 @@ public class MyServiceServlet extends AIServiceServlet {
       response.getWriter().append("Hello");
       //aiResponse.getResult().getFulfillment().getSpeech()
     } catch (AIServiceException e) {
-      e.printStackTrace();
+      System.out.println("Exception accesing API AI");
+      
     }
   }
 }

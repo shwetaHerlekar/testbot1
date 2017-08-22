@@ -23,6 +23,9 @@
 	<script>
 		function sendRequest(form) {
 			var query = form.elements['query'].value;
+			console.log(query);
+			console.log("encodeURIComponent(query)");
+			console.log(encodeURIComponent(query));
 			if (query == null || query == "") {
 				return;
 			}
@@ -32,7 +35,9 @@
             form.elements['response'].scrollTop = form.elements['response'].scrollHeight 
 			var xhr = new XMLHttpRequest();
 			xhr.open("POST", "ai", true);
+			console.log("Post req ")
 			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			
 			var formData = "query=" + encodeURIComponent(query);
 			xhr.send(formData);
 			xhr.onloadend = function(e) {
