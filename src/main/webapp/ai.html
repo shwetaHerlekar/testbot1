@@ -40,6 +40,7 @@
 			
 			var formData = "query=" + encodeURIComponent(query);
 			xhr.send(formData);
+			console.log(e.target.responseText)
 			xhr.onloadend = function(e) {
 				form.elements['button'].disabled = false;
 				console.log(e.target.responseText);
