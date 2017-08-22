@@ -23,7 +23,6 @@ public class MyServiceServlet extends AIServiceServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String session;
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -31,13 +30,8 @@ public class MyServiceServlet extends AIServiceServlet {
 			throws ServletException, IOException {
 		System.out.println(request.getSession());
 		try {
-			if (request.getParameter("sessionKey").isEmpty()) {
-				session = request.getSession().toString();
-			}
-			else{
-				session = request.getParameter("sessionKey");
-			}
-			AIResponse aiResponse = request(request.getParameter("query"), session);
+			
+			AIResponse aiResponse = request(request.getParameter("query"), request.getSession());
 			response.setContentType("text/plain");
 			
 			response.getWriter().append(aiResponse.getResult().getFulfillment().getSpeech());
