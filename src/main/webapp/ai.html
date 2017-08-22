@@ -38,7 +38,7 @@
 			console.log("Post req ")
 			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			
-			var formData = "query=" + encodeURIComponent(query);
+			var formData = "query=" + encodeURIComponent(query)+ ",sessionKey=1234"+ ;
 			xhr.send(formData);
 			xhr.onloadend = function(e) {
 				form.elements['button'].disabled = false;

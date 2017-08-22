@@ -20,7 +20,7 @@ function requestAPI(){
  		xhr.open("POST", "ai", true);
 		console.log("Post req ")
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		var Data = "query=" + encodeURIComponent(text);
+		var Data = "query=" + encodeURIComponent(text)+ ",sessionKey=1234"+ ;
 		xhr.send(Data);
 		xhr.onloadend = function(e) {
 				var div = document.getElementById("box");
@@ -38,6 +38,7 @@ function requestAPI(){
 </head>
 <body>
 <h1> Demo Bot </h1>
+<a href="./ai.html" > ai chat </a>
 	<div id="box" style="width: 400px; border: 2px solid; height: 500px;"></div>
 	<input type="text" id="user-input" style="width: 400px;" />
 	<input type="button" value="submit" onclick="sendRequest()" />

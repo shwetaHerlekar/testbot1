@@ -29,6 +29,7 @@ public class MyServiceServlet extends AIServiceServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println(request.getSession());
 		try {
 			if (request.getParameter("sessionKey").isEmpty()) {
 				session = request.getSession().toString();
@@ -38,6 +39,7 @@ public class MyServiceServlet extends AIServiceServlet {
 			}
 			AIResponse aiResponse = request(request.getParameter("query"), request.getSession());
 			response.setContentType("text/plain");
+			
 			response.getWriter().append(aiResponse.getResult().getFulfillment().getSpeech());
 		} catch (AIServiceException e) {
 			System.out.println("Exception accesing API AI");
