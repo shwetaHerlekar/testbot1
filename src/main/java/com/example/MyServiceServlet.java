@@ -1,7 +1,6 @@
 package com.example;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,19 +27,13 @@ public class MyServiceServlet extends AIServiceServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Enumeration<String> initializationParameters=this.getInitParameterNames();
-	    while(initializationParameters.hasMoreElements()){
-	        String parameterName=initializationParameters.nextElement();
-	        System.out.println("Parameter Name:"+parameterName+"    Parameter Value:"+this.getInitParameter(parameterName));
-	    }
 		try {
 			AIResponse aiResponse = request(request.getParameter("query"), request.getSession());
 			response.setContentType("text/plain");
 			response.getWriter().append(aiResponse.getResult().getFulfillment().getSpeech());
-			//aiResponse.getResult().getFulfillment().getSpeech()
 		} catch (AIServiceException e) {
 			System.out.println("Exception accesing API AI");
-
+			e.printStackTrace();
 		}
 	}
 }
