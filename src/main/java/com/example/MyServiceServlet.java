@@ -1,12 +1,15 @@
 package com.example;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
 
 import ai.api.AIServiceException;
 import ai.api.model.AIResponse;
@@ -32,10 +35,18 @@ public class MyServiceServlet extends AIServiceServlet {
 		try {
 			
 			AIResponse aiResponse = request(request.getParameter("message"), request.getParameter("sessionId"));
-			response.setContentType("text/plain");
+			response.setContentType("application/json");
+			JSONObject obj = new JSONObject();
+			obj.put("displayText", aiResponse.getResult().getFulfillment().getSpeech());
+			obj.put("speech", aiResponse.getResult().getFulfillment().getSpeech());
 			
-			response.getWriter().append(aiResponse.getResult().getFulfillment().getSpeech());
-		} catch (AIServiceException e) {
+			PrintWriter out = response.getWriter();
+			out.print(obj);
+		
+			if(aiResponse.getResult().getFulfillment().getDisplayText()!=null)
+			{
+				obj.put("displayText", aiResponse.getResult().getFulfillment().getDisplayText());
+			}		} catch (AIServiceException e) {
 			System.out.println("Exception accesing API AI");
 			e.printStackTrace();
 		}
