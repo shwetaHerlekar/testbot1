@@ -13,6 +13,7 @@ import org.json.simple.parser.JSONParser;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 
 import ai.api.model.Fulfillment;
 import ai.api.web.AIWebhookServlet;
@@ -39,7 +40,8 @@ protected void doWebhook(AIWebhookRequest input, Fulfillment output) {
 		output.setSpeech("from Webhook");
 		break;
 	case "query":
-		output.setSpeech(getQueryResponse(parameter.get("topic"), parameter.get("law_scope")));
+		//String s = getQueryResponse(parameter.get("topic"), parameter.get("law_scope"));
+		output.setSpeech(parameter.toString());
 	case "state_laws": 
 		output.setSpeech("from Webhook");
 		break;
