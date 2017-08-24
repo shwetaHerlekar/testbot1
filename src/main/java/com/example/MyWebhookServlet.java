@@ -22,7 +22,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 protected void doWebhook(AIWebhookRequest input, Fulfillment output) {
 	// TODO Auto-generated method stub
 	System.out.println(input.getResult().getAction());
-	output.setSpeech(input.getResult().getAction());
+	output.setSpeech(input.getResult().toString());
 	
 }
 
