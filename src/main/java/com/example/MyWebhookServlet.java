@@ -5,6 +5,8 @@ import java.util.HashMap;
 import javax.servlet.ServletContext;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import com.google.gson.JsonElement;
 import ai.api.model.AIOutputContext;
 import ai.api.model.Fulfillment;
@@ -38,7 +40,9 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			output  = getQueryResponse(topic,law_scope.toUpperCase() , output );
 			break;
 		case "state_laws": 
-
+			topic = parameter.get("topics").toString().replaceAll("^\"|\"$", "");
+			String state = parameter.get("state").toString().replaceAll("^\"|\"$", "");
+			output  = getStateActionResponse(topic,state.toUpperCase() , output );
 			break;
 
 		default:
@@ -56,6 +60,17 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		JSONParser parser = new JSONParser();
 		Object obj = null;
 		String response = "No Response!!!" ;
+		AIOutputContext contextOut = new AIOutputContext();
+		HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
+		JsonElement contextOutParameter;
+		try {
+			contextOutParameter = (JsonElement) parser.parse(topic);
+			outParameters.put("topic",contextOutParameter );
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}				
+		
 		if (law_scope.equals("FEDERAL")) {
 			try {
 				obj = parser.parse(new FileReader(pathToDd));
@@ -65,7 +80,45 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 				response += obj1.get(law_scope).toString();
 				output.setDisplayText(response + "\n\nDoes this help?\n :obYes:cb :obNo:cb");
 				output.setSpeech(response + "\n \n This is what I found. Does it help ?");
-				AIOutputContext contextOut = new AIOutputContext();
+				//webhook_res["contextOut"].append({"name":"complaince_expert", "lifespan":2,"parameters":{ "topic": topic} })
+				contextOut.setLifespan(2);
+				contextOut.setName("complaince_expert");
+				contextOut.setParameters(outParameters);
+				output.setContextOut();
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(law_scope.equals("STATE")){
+			output.setSpeech("Which state ?");
+			output.setDisplayText("Which State ?");
+			contextOut.setLifespan(5);
+			contextOut.setName("state_law");
+			contextOut.setParameters(outParameters);
+			
+		}
+
+		return output ;
+	}
+	protected Fulfillment getStateActionResponse(String topic , String state , Fulfillment output){
+		ServletContext conetxt = getServletContext();
+
+		String pathToDd = conetxt.getRealPath("/WEB-INF/db.txt");
+
+		JSONParser parser = new JSONParser();
+		Object obj = null;
+		String response = "No Response!!!" ;
+		AIOutputContext contextOut = new AIOutputContext();
+		try {
+				obj = parser.parse(new FileReader(pathToDd));
+				JSONObject jsonObject = (JSONObject) obj;
+				JSONObject obj1 = (JSONObject)	jsonObject.get(topic.toUpperCase().trim());
+				response = "This is what I found on" + topic+ ". \n" ;
+				response += obj1.get(state).toString();
+				output.setDisplayText(response + "\n\nDoes this help?\n :obYes:cb :obNo:cb");
+				output.setSpeech(response + "\n \n This is what I found. Does it help ?");
 				//webhook_res["contextOut"].append({"name":"complaince_expert", "lifespan":2,"parameters":{ "topic": topic} })
 				HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
 				JsonElement contextOutParameter=(JsonElement) parser.parse(topic);				
@@ -79,7 +132,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		
 
 
 		return output ;
