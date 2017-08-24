@@ -20,7 +20,7 @@ function requestAPI(){
  		xhr.open("POST", "ai", true);
 		console.log("Post req ")
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		var Data = "query=" + encodeURIComponent(text) ;
+		var Data = "query=" + encodeURIComponent(text) +;
 		xhr.send(Data);
 		xhr.onloadend = function(e) {
 				var div = document.getElementById("box");
