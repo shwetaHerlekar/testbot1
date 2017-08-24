@@ -98,6 +98,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			contextOut.setLifespan(5);
 			contextOut.setName("state_law");
 			contextOut.setParameters(outParameters);
+			output.setContextOut();
 
 		}
 
