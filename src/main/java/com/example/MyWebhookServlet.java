@@ -37,13 +37,14 @@ protected void doWebhook(AIWebhookRequest input, Fulfillment output) {
 	case "overtime_states":
 	case "overtime_states_no":
 	case "compliance_expert_yes":
-		output.setSpeech("from Webhook");
+		output.setSpeech(parameter.toString());
 		break;
 	case "query":
 		//String s = getQueryResponse(parameter.get("topic"), parameter.get("law_scope"));
 		output.setSpeech(parameter.toString());
+		break;
 	case "state_laws": 
-		output.setSpeech("from Webhook");
+		output.setSpeech(parameter.toString());
 		break;
 
 	default:
