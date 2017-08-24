@@ -12,16 +12,11 @@ import ai.api.model.AIOutputContext;
 import ai.api.model.Fulfillment;
 import ai.api.web.AIWebhookServlet;
 
-// [START example]
 @SuppressWarnings("serial")
 public class MyWebhookServlet extends AIWebhookServlet  { 
-
 	//https://ai-ml-eychat.appspot.com/webhook  
 	@Override
 	protected void doWebhook(AIWebhookRequest input, Fulfillment output) {
-
-
-		// TODO Auto-generated method stub
 		String action = input.getResult().getAction();
 		HashMap<String, JsonElement> parameter = input.getResult().getParameters();
 
@@ -41,7 +36,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			output  = getQueryResponse(topic,law_scope.toUpperCase() , output );
 			break;
 		case "state_laws": 
-			topic = parameter.get("topics").toString().replaceAll("^\"|\"$", "");
+			topic = parameter.get("topic").toString().replaceAll("^\"|\"$", "");
 			String state = parameter.get("state").toString().replaceAll("^\"|\"$", "");
 			output  = getStateActionResponse(topic,state.toUpperCase() , output );
 			break;
@@ -52,7 +47,6 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		//output.setSpeech(input.getResult().toString());
 
 	}
-
 	protected Fulfillment getQueryResponse(String topic , String law_scope , Fulfillment output){
 		ServletContext conetxt = getServletContext();
 
@@ -86,7 +80,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 				contextOut.setName("complaince_expert");
 				contextOut.setParameters(outParameters);
 				output.setContextOut(contextOut);
-
+				
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
