@@ -32,7 +32,8 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		case "overtime_states":
 		case "overtime_states_no":
 		case "compliance_expert_yes":
-			output.setSpeech(parameter.toString());
+			output.setDisplayText("You may write your detailed query via email and our compliance expert will get back to you within 3 working days. If your query is urgent in nature then you may opt for urgent response desk and you may receive response within 24 hours. \n\nWould you like to write a query with standard response time?\n :obYes:cb :obNo:cb");
+			output.setSpeech("You may write your detailed query via email and our compliance expert will get back to you within 3 working days. If your query is urgent in nature then you may opt for urgent response desk and you may receive response within 24 hours.       Would you like to write a query with standard response time?");
 			break;
 		case "query":
 			String topic = parameter.get("topics").toString().replaceAll("^\"|\"$", "");
@@ -70,7 +71,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}				
-		
+
 		if (law_scope.equals("FEDERAL")) {
 			try {
 				obj = parser.parse(new FileReader(pathToDd));
@@ -97,7 +98,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			contextOut.setLifespan(5);
 			contextOut.setName("state_law");
 			contextOut.setParameters(outParameters);
-			
+
 		}
 
 		return output ;
@@ -112,27 +113,27 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		String response = "No Response!!!" ;
 		AIOutputContext contextOut = new AIOutputContext();
 		try {
-				obj = parser.parse(new FileReader(pathToDd));
-				JSONObject jsonObject = (JSONObject) obj;
-				JSONObject obj1 = (JSONObject)	jsonObject.get(topic.toUpperCase().trim());
-				response = "This is what I found on" + topic+ ". \n" ;
-				response += obj1.get(state).toString();
-				output.setDisplayText(response + "\n\nDoes this help?\n :obYes:cb :obNo:cb");
-				output.setSpeech(response + "\n \n This is what I found. Does it help ?");
-				//webhook_res["contextOut"].append({"name":"complaince_expert", "lifespan":2,"parameters":{ "topic": topic} })
-				HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
-				JsonElement contextOutParameter=(JsonElement) parser.parse(topic);				
-				outParameters.put("topic",contextOutParameter );
-				contextOut.setLifespan(2);
-				contextOut.setName("complaince_expert");
-				contextOut.setParameters(outParameters);
-				output.setContextOut();
+			obj = parser.parse(new FileReader(pathToDd));
+			JSONObject jsonObject = (JSONObject) obj;
+			JSONObject obj1 = (JSONObject)	jsonObject.get(topic.toUpperCase().trim());
+			response = "This is what I found on" + topic+ ". \n" ;
+			response += obj1.get(state).toString();
+			output.setDisplayText(response + "\n\nDoes this help?\n :obYes:cb :obNo:cb");
+			output.setSpeech(response + "\n \n This is what I found. Does it help ?");
+			//webhook_res["contextOut"].append({"name":"complaince_expert", "lifespan":2,"parameters":{ "topic": topic} })
+			HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
+			JsonElement contextOutParameter=(JsonElement) parser.parse(topic);				
+			outParameters.put("topic",contextOutParameter );
+			contextOut.setLifespan(2);
+			contextOut.setName("complaince_expert");
+			contextOut.setParameters(outParameters);
+			output.setContextOut();
 
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 
 		return output ;
