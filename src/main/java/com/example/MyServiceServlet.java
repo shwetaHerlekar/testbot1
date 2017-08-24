@@ -31,7 +31,7 @@ public class MyServiceServlet extends AIServiceServlet {
 		System.out.println(request.getSession());
 		try {
 			
-			AIResponse aiResponse = request(request.getParameter("query"), request.getParameter("sessionKey"));
+			AIResponse aiResponse = request(request.getParameter("message"), request.getParameter("sessionId"));
 			response.setContentType("text/plain");
 			
 			response.getWriter().append(aiResponse.getResult().getFulfillment().getSpeech());
