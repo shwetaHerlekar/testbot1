@@ -6,7 +6,7 @@ import javax.servlet.ServletContext;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+import java.util.logging.Logger;
 import com.google.gson.JsonElement;
 import ai.api.model.AIOutputContext;
 import ai.api.model.Fulfillment;
@@ -15,6 +15,7 @@ import ai.api.web.AIWebhookServlet;
 @SuppressWarnings("serial")
 public class MyWebhookServlet extends AIWebhookServlet  { 
 	//https://ai-ml-eychat.appspot.com/webhook  
+	private static final Logger log = Logger.getLogger(MyWebhookServlet.class.getName());
 	@Override
 	protected void doWebhook(AIWebhookRequest input, Fulfillment output) {
 		String action = input.getResult().getAction();
@@ -37,7 +38,9 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			break;
 		case "state_laws": 
 			topic = parameter.get("topic").toString().replaceAll("^\"|\"$", "");
+			log.info(topic);
 			String state = parameter.get("state").toString().replaceAll("^\"|\"$", "");
+			log.info(state);
 			output  = getStateActionResponse(topic,state.toUpperCase() , output );
 			break;
 
@@ -100,6 +103,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		return output ;
 	}
 	protected Fulfillment getStateActionResponse(String topic , String state , Fulfillment output){
+		log.info("inside funb");
 		ServletContext conetxt = getServletContext();
 
 		String pathToDd = conetxt.getRealPath("/WEB-INF/db.txt");
@@ -131,7 +135,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		}
 
 
-
+		log.info("out");
 		return output ;
 	}
 }
