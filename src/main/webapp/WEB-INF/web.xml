@@ -3,10 +3,6 @@
   xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
   version="2.5">
-<servlet>
-    <servlet-name>query</servlet-name>
-    <servlet-class>com.example.MyWebhookServlet</servlet-class>
-  </servlet>
   
   <servlet>
     <servlet-name>ai</servlet-name>
@@ -16,9 +12,17 @@
         <param-value>c17ce92704f14b0f85181127e2f0e6b6</param-value>
         </init-param>
   </servlet>
+   <servlet>
+    <servlet-name>webhook</servlet-name>
+    <servlet-class>com.example.MyWebhookServlet</servlet-class>
+    <init-param>
+        <param-name>apiaiKey</param-name>
+        <param-value>c17ce92704f14b0f85181127e2f0e6b6</param-value>
+        </init-param>
+  </servlet>
   <servlet-mapping>
-    <servlet-name>query</servlet-name>
-    <url-pattern>/actions</url-pattern>
+    <servlet-name>webhook</servlet-name>
+    <url-pattern>/webhook</url-pattern>
   </servlet-mapping>
    <servlet-mapping>
     <servlet-name>ai</servlet-name>
