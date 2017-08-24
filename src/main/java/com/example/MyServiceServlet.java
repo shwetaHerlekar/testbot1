@@ -33,20 +33,19 @@ public class MyServiceServlet extends AIServiceServlet {
 			throws ServletException, IOException {
 		System.out.println(request.getSession());
 		try {
-			
+
 			AIResponse aiResponse = request(request.getParameter("message"), request.getParameter("sessionId"));
 			response.setContentType("application/json");
 			JSONObject obj = new JSONObject();
 			obj.put("displayText", aiResponse.getResult().getFulfillment().getSpeech());
 			obj.put("speech", aiResponse.getResult().getFulfillment().getSpeech());
-			
-			PrintWriter out = response.getWriter();
-			out.print(obj);
-		
 			if(aiResponse.getResult().getFulfillment().getDisplayText()!=null)
 			{
 				obj.put("displayText", aiResponse.getResult().getFulfillment().getDisplayText());
-			}		} catch (AIServiceException e) {
+			}	
+			PrintWriter out = response.getWriter();
+			out.print(obj);	
+		} catch (AIServiceException e) {
 			System.out.println("Exception accesing API AI");
 			e.printStackTrace();
 		}
