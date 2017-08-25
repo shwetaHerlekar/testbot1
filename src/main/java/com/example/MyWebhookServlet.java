@@ -58,14 +58,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		JSONParser parser = new JSONParser();
 		Object obj = null;
 		String response = "No Response!!!" ;
-		HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
-		JsonElement contextOutParameter = null;
-		try {
-			contextOutParameter = (JsonElement) parser.parse(topic);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	
 		if (law_scope.equals("FEDERAL")) {
 			try {
 				obj = parser.parse(new FileReader(pathToDd));
@@ -77,11 +70,15 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 				output.setSpeech(response + "\n \n This is what I found. Does it help ?");
 				//webhook_res["contextOut"].append({"name":"complaince_expert", "lifespan":2,"parameters":{ "topic": topic} })
 				AIOutputContext contextOut = new AIOutputContext();
-				log.info(contextOutParameter.toString());
+				HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
+				JsonElement contextOutParameter ;
+				contextOutParameter = (JsonElement) parser.parse(topic);
 				outParameters.put("topic",contextOutParameter );
 				contextOut.setLifespan(2);
 				contextOut.setName("complaince_expert");
 				contextOut.setParameters(outParameters);
+				log.info("Context out parameters" + contextOutParameter.toString());
+
 				output.setContextOut(contextOut);
 				
 
@@ -96,6 +93,15 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			AIOutputContext contextOut = new AIOutputContext();
 			contextOut.setLifespan(5);
 			contextOut.setName("state_law");
+			HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
+			JsonElement contextOutParameter = null ;
+			try {
+				contextOutParameter = (JsonElement) parser.parse(topic);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			outParameters.put("topic",contextOutParameter );
 			contextOut.setParameters(outParameters);
 			log.info("" + contextOut.getLifespan() + " : " + contextOut.getName() );
 			output.setContextOut(contextOut);
