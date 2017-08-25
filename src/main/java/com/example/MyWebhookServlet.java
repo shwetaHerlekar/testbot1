@@ -8,6 +8,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.util.logging.Logger;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+
 import ai.api.model.AIOutputContext;
 import ai.api.model.Fulfillment;
 import ai.api.web.AIWebhookServlet;
@@ -20,7 +22,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 	protected void doWebhook(AIWebhookRequest input, Fulfillment output) {
 		String action = input.getResult().getAction();
 		HashMap<String, JsonElement> parameter = input.getResult().getParameters();
-
+					
 		switch (action) {
 		case "overtime":
 		case "overtime_federal":
@@ -52,9 +54,7 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 	}
 	protected Fulfillment getQueryResponse(String topic , String law_scope , Fulfillment output){
 		ServletContext conetxt = getServletContext();
-
 		String pathToDd = conetxt.getRealPath("/WEB-INF/db.txt");
-
 		JSONParser parser = new JSONParser();
 		Object obj = null;
 		String response = "No Response!!!" ;
@@ -71,9 +71,11 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 				//webhook_res["contextOut"].append({"name":"complaince_expert", "lifespan":2,"parameters":{ "topic": topic} })
 				AIOutputContext contextOut = new AIOutputContext();
 				HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
+				
 				JsonElement contextOutParameter ;
-				contextOutParameter = (JsonElement) parser.parse(topic);
+				contextOutParameter = new JsonPrimitive(topic);
 				outParameters.put("topic",contextOutParameter );
+				
 				contextOut.setLifespan(2);
 				contextOut.setName("complaince_expert");
 				contextOut.setParameters(outParameters);
@@ -94,15 +96,8 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			contextOut.setLifespan(5);
 			contextOut.setName("state_law");
 			HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
-			JsonElement contextOutParameter = null ;
-			try {
-				log.info("inside query - state "+topic);
-				contextOutParameter = (JsonElement) parser.parse(topic);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				log.info("Exception "+ e);
-				e.printStackTrace();
-			}
+			JsonElement contextOutParameter ;
+			contextOutParameter = new JsonPrimitive(topic);
 			outParameters.put("topic",contextOutParameter );
 			contextOut.setParameters(outParameters);
 			log.info("" + contextOut.getLifespan() + " : " + contextOut.getName() );
