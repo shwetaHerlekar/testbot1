@@ -58,17 +58,14 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		JSONParser parser = new JSONParser();
 		Object obj = null;
 		String response = "No Response!!!" ;
-		AIOutputContext contextOut = new AIOutputContext();
 		HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
-		JsonElement contextOutParameter;
+		JsonElement contextOutParameter = null;
 		try {
 			contextOutParameter = (JsonElement) parser.parse(topic);
-			outParameters.put("topic",contextOutParameter );
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}				
-
+		}
 		if (law_scope.equals("FEDERAL")) {
 			try {
 				obj = parser.parse(new FileReader(pathToDd));
@@ -79,6 +76,9 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 				output.setDisplayText(response + "\n\nDoes this help?\n :obYes:cb :obNo:cb");
 				output.setSpeech(response + "\n \n This is what I found. Does it help ?");
 				//webhook_res["contextOut"].append({"name":"complaince_expert", "lifespan":2,"parameters":{ "topic": topic} })
+				AIOutputContext contextOut = new AIOutputContext();
+				log.info(contextOutParameter.toString());
+				outParameters.put("topic",contextOutParameter );
 				contextOut.setLifespan(2);
 				contextOut.setName("complaince_expert");
 				contextOut.setParameters(outParameters);
@@ -93,9 +93,11 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 		else if(law_scope.equals("STATE")){
 			output.setSpeech("Which state ?");
 			output.setDisplayText("Which State ?");
+			AIOutputContext contextOut = new AIOutputContext();
 			contextOut.setLifespan(5);
 			contextOut.setName("state_law");
 			contextOut.setParameters(outParameters);
+			log.info("" + contextOut.getLifespan() + " : " + contextOut.getName() );
 			output.setContextOut(contextOut);
 
 		}
