@@ -96,9 +96,11 @@ public class MyWebhookServlet extends AIWebhookServlet  {
 			HashMap<String, JsonElement> outParameters = new HashMap<String , JsonElement>();
 			JsonElement contextOutParameter = null ;
 			try {
+				log.info("inside query - state "+topic);
 				contextOutParameter = (JsonElement) parser.parse(topic);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
+				log.info("Exception "+ e);
 				e.printStackTrace();
 			}
 			outParameters.put("topic",contextOutParameter );
