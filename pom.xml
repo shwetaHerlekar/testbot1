@@ -4,7 +4,12 @@
   <version>1.0-SNAPSHOT</version>
   <groupId>com.example</groupId>
   <artifactId>appengine-webhook</artifactId>
-  
+  <properties>
+  <INSTANCE_CONNECTION_NAME></INSTANCE_CONNECTION_NAME>
+    <user>root</user>
+    <password>root</password>
+    <database>students</database>
+  </properties>
 <dependencies>
   <dependency>
         <groupId>javax.servlet</groupId>
@@ -38,6 +43,16 @@
        <artifactId>slf4j-log4j12</artifactId>
        <version>1.7.5</version>
    </dependency>
+   <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.38</version>
+  </dependency>
+  <dependency>
+  <groupId>com.google.cloud.sql</groupId>
+  <artifactId>mysql-socket-factory</artifactId>
+  <version>1.0.3</version>
+  </dependency>
   </dependencies>
   <build>
     <!-- for hot reload of the web application -->
