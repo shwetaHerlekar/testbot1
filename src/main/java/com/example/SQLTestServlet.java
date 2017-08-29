@@ -43,14 +43,14 @@ public class SQLTestServlet extends HttpServlet {
 			System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			out.println("con done");	
-			/*stmt = conn.createStatement();
-			ResultSet rs=stmt.executeQuery("select * from studentList");
-			while(rs.next()){  
+			stmt = conn.createStatement();
+			int t = stmt.executeUpdate("insert into sample Values('Benifit', 'Group Insurance')");
+			/*while(rs.next()){  
 				out.println(rs.getString(1));
 				out.println(rs.getInt(2));
-			}
+			}*/
 			conn.close();  
-			out.println("good bye!");*/	
+			out.println("good bye!");
 			
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
