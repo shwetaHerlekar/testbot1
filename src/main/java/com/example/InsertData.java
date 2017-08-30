@@ -107,6 +107,8 @@ public class InsertData extends HttpServlet {
                 if(!firstRow){
              	   insertTopic(conn,cRow[0]);
              	   insertSubTopic(conn, cRow[1], cRow[0], out);
+             	   insertState(conn, headers, "US", out);
+             	   insertLawDesc(conn, headers, cRow, out);
                 }
                firstRow = false;
                //System.out.println(cRow[0]);
@@ -152,6 +154,55 @@ public class InsertData extends HttpServlet {
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("topic_id");
+	         out.println(id);
+	         return id;
+	      }
+		return id;
+	}
+	
+	public void insertState(Connection conn, String[] headers, String country,PrintWriter out) throws SQLException {
+		stmt = conn.createStatement();
+		//int topic_id = getTopicId(conn, country, out);
+		
+		for (int i = 5; i < headers.length; i++) {
+			out.println(headers[i]);
+			int t1 = 1;
+			int t = stmt.executeUpdate("insert into State(state_name,country_id) Values('"+headers[i]+"','"+t1+"')");
+		}
+		
+		
+	}
+	
+	public void insertLawDesc(Connection conn, String[] headers, String[] curRow,PrintWriter out) throws SQLException {
+		out.println("inside law desc");
+		for (int i = 4; i < curRow.length; i++) {
+			
+			out.println(curRow[i]);
+			
+			if(i==4)
+			{
+				int id = 1;
+				stmt = conn.createStatement();
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id) Values('"+curRow[4]+"','"+id+"')");
+			}
+			else
+			{
+				int id = 1;
+				int id1 = getstateId(conn, headers[i], out);
+				stmt = conn.createStatement();
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id) Values('"+curRow[4]+"','"+id1+"','"+id+"')");
+			}
+		}
+		
+	}
+	
+	public int getstateId(Connection conn, String state, PrintWriter out) throws SQLException{
+		stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("select state_id from State where state_name='"+state+"';");
+		int id=-1;
+		while(rs.next()){
+	         //Retrieve by column name
+	         id  = rs.getInt("state_id");
 	         out.println(id);
 	         return id;
 	      }
