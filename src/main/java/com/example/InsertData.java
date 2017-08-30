@@ -107,6 +107,7 @@ public class InsertData extends HttpServlet {
                firstRow = false;
                //System.out.println(cRow[0]);
                insertTopic(conn,cRow[0]);
+               insertSubTopic(conn, cRow[1], cRow[0], out);
             }
             
             /*for (int i = 0; i < headers.length; i++) {
@@ -143,7 +144,7 @@ public class InsertData extends HttpServlet {
 	
 	public int getTopicId(Connection conn, String topic, PrintWriter out) throws SQLException{
 		stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name="+topic);
+		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name='"+topic+"';");
 		int id=-1;
 		while(rs.next()){
 	         //Retrieve by column name
