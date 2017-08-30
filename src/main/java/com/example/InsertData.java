@@ -142,7 +142,7 @@ public class InsertData extends HttpServlet {
 		stmt = conn.createStatement();
 		int topic_id = getTopicId(conn, topic, out);
 		out.println(subtopic);
-		int t = stmt.executeUpdate("insert into Topics(sub_topic_name,topic_id) Values('"+subtopic+"','"+topic_id+"')");
+		int t = stmt.executeUpdate("insert into SubTopics(sub_topic_name,topic_id) Values('"+subtopic+"','"+topic_id+"')");
 	}
 	
 	public int getTopicId(Connection conn, String topic, PrintWriter out) throws SQLException{
