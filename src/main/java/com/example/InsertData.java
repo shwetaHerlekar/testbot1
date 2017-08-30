@@ -179,9 +179,10 @@ public class InsertData extends HttpServlet {
 		out.println("inside law desc");
 		for (int i = 4; i < curRow.length; i++) {
 			
-			out.println(curRow[i]);
+			//out.println(curRow[i]);
+			out.println(law_id);
 			law_id++;
-			insertQuestion(conn, curRow[2], law_id, out);
+			//insertQuestion(conn, curRow[2], law_id, out);
 			if(i==4)
 			{
 				int id = 1;
