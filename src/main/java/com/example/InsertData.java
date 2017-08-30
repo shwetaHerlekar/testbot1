@@ -104,10 +104,13 @@ public class InsertData extends HttpServlet {
                         }
                     }
                 }
+                if(!firstRow){
+             	   insertTopic(conn,cRow[0]);
+             	   insertSubTopic(conn, cRow[1], cRow[0], out);
+                }
                firstRow = false;
                //System.out.println(cRow[0]);
-               insertTopic(conn,cRow[0]);
-               insertSubTopic(conn, cRow[1], cRow[0], out);
+               
             }
             
             /*for (int i = 0; i < headers.length; i++) {
