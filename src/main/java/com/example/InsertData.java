@@ -179,7 +179,7 @@ public class InsertData extends HttpServlet {
 		out.println("inside law desc");
 		for (int i = 4; i < curRow.length; i++) {
 			
-			//out.println(curRow[i]);
+			out.println(curRow[i]);
 			law_id++;
 			insertQuestion(conn, curRow[2], law_id, out);
 			if(i==4)
@@ -218,7 +218,7 @@ public class InsertData extends HttpServlet {
 		stmt = conn.createStatement();
 		//int topic_id = getTopicId(conn, country, out);
 		stmt = conn.createStatement();
-		//out.println(question);
+		out.println(question);
 		int uid = 1;
 		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,law_desc_id,questions_type,User_id) Values('"+question+"','"+law_id1+"','SYSTEM','"+uid+"')");	
 	}
