@@ -51,7 +51,7 @@ public class InsertData extends HttpServlet {
 			Class.forName(JDBC_DRIVER);
 			DB_URL = System.getProperty("ae-cloudsql.cloudsql-database-url");
 
-			System.out.println("Connecting to a selected database...");
+			//System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			
 			String path = InsertData.class.getResource("/sample_data.xlsx").getPath();
