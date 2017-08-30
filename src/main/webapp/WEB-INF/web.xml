@@ -44,4 +44,14 @@
     <servlet-name>SQLTestServlet</servlet-name>
     <url-pattern>/SQLTestServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InsertData</display-name>
+    <servlet-name>InsertData</servlet-name>
+    <servlet-class>com.example.InsertData</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertData</servlet-name>
+    <url-pattern>/InsertData</url-pattern>
+  </servlet-mapping>
 </web-app>
