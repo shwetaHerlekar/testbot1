@@ -30,6 +30,7 @@ public class InsertData extends HttpServlet {
 	static String PASS = "root";
 	static Connection conn = null;
 	static Statement stmt = null;   
+	public int law_id=0;
 	
        
     /**
@@ -143,7 +144,7 @@ public class InsertData extends HttpServlet {
 	public void insertSubTopic(Connection conn, String subtopic, String topic,PrintWriter out) throws SQLException {
 		stmt = conn.createStatement();
 		int topic_id = getTopicId(conn, topic, out);
-		out.println(subtopic);
+		//out.println(subtopic);
 		int t = stmt.executeUpdate("insert into SubTopics(sub_topic_name,topic_id) Values('"+subtopic+"','"+topic_id+"')");
 	}
 	
@@ -154,7 +155,7 @@ public class InsertData extends HttpServlet {
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("topic_id");
-	         out.println(id);
+	         //out.println(id);
 	         return id;
 	      }
 		return id;
@@ -162,10 +163,11 @@ public class InsertData extends HttpServlet {
 	
 	public void insertState(Connection conn, String[] headers, String country,PrintWriter out) throws SQLException {
 		stmt = conn.createStatement();
+		out.println("inside state");
 		//int topic_id = getTopicId(conn, country, out);
 		
 		for (int i = 5; i < headers.length; i++) {
-			out.println(headers[i]);
+			//out.println(headers[i]);
 			int t1 = 1;
 			int t = stmt.executeUpdate("insert into State(state_name,country_id) Values('"+headers[i]+"','"+t1+"')");
 		}
@@ -177,20 +179,23 @@ public class InsertData extends HttpServlet {
 		out.println("inside law desc");
 		for (int i = 4; i < curRow.length; i++) {
 			
-			out.println(curRow[i]);
-			
+			//out.println(curRow[i]);
+			law_id++;
+			insertQuestion(conn, curRow[2], law_id, out);
 			if(i==4)
 			{
 				int id = 1;
+				int id1= getTopicId(conn, curRow[0], out);
 				stmt = conn.createStatement();
-				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id) Values('"+curRow[4]+"','"+id+"')");
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[4]+"','"+id+",'"+id1+"')");
 			}
 			else
 			{
 				int id = 1;
 				int id1 = getstateId(conn, headers[i], out);
+				int id2 = getTopicId(conn, curRow[i], out);
 				stmt = conn.createStatement();
-				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id) Values('"+curRow[4]+"','"+id1+"','"+id+"')");
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[4]+"','"+id1+"','"+id+"','"+id2+"')");
 			}
 		}
 		
@@ -203,9 +208,18 @@ public class InsertData extends HttpServlet {
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("state_id");
-	         out.println(id);
+	         //out.println(id);
 	         return id;
 	      }
 		return id;
+	}
+	
+	public void insertQuestion(Connection conn, String question, int law_id1,PrintWriter out) throws SQLException {
+		stmt = conn.createStatement();
+		//int topic_id = getTopicId(conn, country, out);
+		stmt = conn.createStatement();
+		//out.println(question);
+		int uid = 1;
+		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,law_desc_id,questions_type,User_id) Values('"+question+"','"+law_id1+"','SYSTEM','"+uid+"')");	
 	}
 }
