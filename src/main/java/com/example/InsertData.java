@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
@@ -118,6 +119,7 @@ public class InsertData extends HttpServlet {
 			System.out.println("exception!!");
 			e.printStackTrace();
 		}
+	  out.println("Good Bye!!");
 	}
 
 	/**
@@ -130,5 +132,25 @@ public class InsertData extends HttpServlet {
 	public void insertTopic(Connection conn, String topic) throws SQLException {
 		stmt = conn.createStatement();
 		int t = stmt.executeUpdate("insert into Topics(topic_name) Values('"+topic+"')");
+	}
+	
+	public void insertSubTopic(Connection conn, String subtopic, String topic,PrintWriter out) throws SQLException {
+		stmt = conn.createStatement();
+		int topic_id = getTopicId(conn, topic, out);
+		out.println(subtopic);
+		int t = stmt.executeUpdate("insert into Topics(sub_topic_name,topic_id) Values('"+subtopic+"','"+topic_id+"')");
+	}
+	
+	public int getTopicId(Connection conn, String topic, PrintWriter out) throws SQLException{
+		stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name="+topic);
+		int id=-1;
+		while(rs.next()){
+	         //Retrieve by column name
+	         id  = rs.getInt("topic_id");
+	         out.println(id);
+	         return id;
+	      }
+		return id;
 	}
 }
