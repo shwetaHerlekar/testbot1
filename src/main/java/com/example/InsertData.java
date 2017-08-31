@@ -112,8 +112,8 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                   //insertLawDesc(headers, cRow, out);
-             	   insertQuestion(conn, cRow[2], cRow[0], cRow[1], out);
+                   insertLawDesc(headers, cRow, out);
+             	   //insertQuestion(conn, cRow[2], cRow[0], cRow[1], out);
                 }
                 else
                 {
@@ -181,25 +181,35 @@ public class InsertData extends HttpServlet {
 		
 	}
 	
-	/*public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException, ClassNotFoundException {
-		out.println(curRow.length);
-		for (int i = 4; i < curRow.length; i++) {
+	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException {
+		out.println("inside law desc");
+		for (int i = 3; i < curRow.length; i++) {
 			
-			curRow[i] = curRow[i].replaceAll("\'", "").replaceAll("\"", "").replaceAll("\n", "").replaceAll("\t", "");
-			insertStateLaw(curRow[i]);
+			
+			//out.println(law_id);
+			//law_id++;
+			curRow[i] = curRow[i].replace("'","''");
+			
+			if(i==3)
+			{
+				int id = 1;
+				int id1= getTopicId(curRow[0], out);
+				stmt = conn.createStatement();
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
+			}
+			else
+			{
+				int id = 1;
+				int id1 = getstateId(headers[i], out);
+				int id2 = getTopicId(curRow[0], out);
+				stmt = conn.createStatement();
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
+			}
 		}
-		out.println("/////");
-	}
-	
-	public void insertStateLaw(String desc) throws SQLException, ClassNotFoundException {
-		Connection conn1 = createDBConnection();
-		stmt = conn1.createStatement();
-		int t = stmt.executeUpdate("insert into Law_Description(law_description) Values('"+desc+"');");
-		conn1.close();
-	}
+    }
 	
 	
-	public int getstateId(Connection conn, String state, PrintWriter out) throws SQLException{
+	public int getstateId(String state, PrintWriter out) throws SQLException{
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select state_id from State where state_name='"+state+"';");
 		int id=-1;
@@ -210,7 +220,7 @@ public class InsertData extends HttpServlet {
 	         return id;
 	      }
 		return id;
-	} */
+	} 
 	
 	public int getSubTopicId(String subtopic, PrintWriter out) throws SQLException{
 		//out.println(subtopic);
