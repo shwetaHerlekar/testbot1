@@ -166,7 +166,7 @@ public class InsertData extends HttpServlet {
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("topic_id");
-	         out.println("topic id:"+id);
+	        // out.println("topic id:"+id);
 	         return id;
 	      }
 		return id;
