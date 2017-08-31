@@ -50,11 +50,13 @@ public class InsertData extends HttpServlet {
 		out.println("Hello SQL!!");	
 		try {
 			
-			Class.forName(JDBC_DRIVER);
+			/*Class.forName(JDBC_DRIVER);
 			DB_URL = System.getProperty("ae-cloudsql.cloudsql-database-url");
 
 			//System.out.println("Connecting to a selected database...");
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);*/
+			
+			conn = createDBConnection();
 			
 			String path = InsertData.class.getResource("/sample_data.xlsx").getPath();
 			FileInputStream excelFile = new FileInputStream(new File(path));
@@ -106,8 +108,8 @@ public class InsertData extends HttpServlet {
                     }
                 }
                 if(!firstRow){
-             	   insertTopic(conn,cRow[0]);
-             	   insertSubTopic(conn, cRow[1], cRow[0], out);
+             	   //insertTopic(conn,cRow[0]);
+             	   //insertSubTopic(conn, cRow[1], cRow[0], out);
              	   //insertState(conn, headers, "US", out);
              	   insertLawDesc(conn, headers, cRow, out);
                 }
@@ -183,18 +185,19 @@ public class InsertData extends HttpServlet {
 	
 	public void insertLawDesc(Connection conn, String[] headers, String[] curRow,PrintWriter out) throws SQLException {
 		out.println("inside law desc");
-		for (int i = 4; i < curRow.length; i++) {
+		for (int i = 3; i < curRow.length; i++) {
 			
-			out.println(curRow[i]);
+			//out.println(curRow[i]);
 			out.println(law_id);
+			out.println(conn.isClosed());
 			law_id++;
 			//insertQuestion(conn, curRow[2], law_id, out);
-			if(i==4)
+			/*if(i==3)
 			{
 				int id = 1;
 				int id1= getTopicId(conn, curRow[0], out);
 				stmt = conn.createStatement();
-				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[4]+"','"+id+"','"+id1+"')");
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
 			}
 			else
 			{
@@ -202,8 +205,8 @@ public class InsertData extends HttpServlet {
 				int id1 = getstateId(conn, headers[i], out);
 				int id2 = getTopicId(conn, curRow[0], out);
 				stmt = conn.createStatement();
-				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[4]+"','"+id1+"','"+id+"','"+id2+"')");
-			}
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
+			}*/
 		}
 		
 	}
@@ -228,5 +231,28 @@ public class InsertData extends HttpServlet {
 		out.println(question);
 		int uid = 1;
 		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,law_desc_id,questions_type,User_id) Values('"+question+"','"+law_id1+"','SYSTEM','"+uid+"')");	
+	}
+	
+	public int getSubTopicId(Connection conn, String subtopic, PrintWriter out) throws SQLException{
+		stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("select sub_topic_id from SubTopics where sub_topic_name='"+subtopic+"';");
+		int id=-1;
+		while(rs.next()){
+	         //Retrieve by column name
+	         id  = rs.getInt("sub_topic_id");
+	         //out.println(id);
+	         return id;
+	      }
+		return id;
+	} 
+	
+	public void insertQuestion(Connection conn, String question, String topic,String subtopic,PrintWriter out) throws SQLException {
+		stmt = conn.createStatement();
+		int topic_id = getTopicId(conn, topic, out);
+		int sub_topic_id = getSubTopicId(conn, subtopic, out);
+		stmt = conn.createStatement();
+		out.println(question);
+		int uid = 1;
+		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,subtopic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')");	
 	}
 }
