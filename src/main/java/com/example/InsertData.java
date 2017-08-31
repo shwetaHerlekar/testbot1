@@ -244,8 +244,8 @@ public class InsertData extends HttpServlet {
 	} 
 	
 	public void insertQuestion(Connection conn, String question, String topic,String subtopic,PrintWriter out) throws SQLException {
-		question = question.replace("'", "\'");
-		question = question.replace('"', '\"');
+		question = question.replaceAll("\'", "");
+		
 		out.println(question);
 		out.println("inside question");
 		stmt = conn.createStatement();
