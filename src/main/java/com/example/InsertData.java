@@ -56,7 +56,7 @@ public class InsertData extends HttpServlet {
 			//System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);*/
 			
-			conn = createDBConnection();
+			//conn = createDBConnection();
 			
 			String path = InsertData.class.getResource("/sample_data.xlsx").getPath();
 			FileInputStream excelFile = new FileInputStream(new File(path));
