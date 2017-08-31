@@ -68,10 +68,12 @@ public class InsertData extends HttpServlet {
             String[] cRow = new String[55];
             boolean firstRow = true ;
             int index = 0;
+            int RowCount = 0;
            
             while (iterator.hasNext()) {
             	
             	index = 0;
+            	RowCount++;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 //out.println("inside main while");
@@ -112,7 +114,9 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                   insertLawDesc(headers, cRow, out);
+                	if(RowCount<1){
+                		insertLawDesc(headers, cRow, out);
+                	}
              	   //insertQuestion(conn, cRow[2], cRow[0], cRow[1], out);
                 }
                 else
@@ -155,14 +159,14 @@ public class InsertData extends HttpServlet {
 	
 	public int getTopicId(String topic, PrintWriter out) throws SQLException{
 		
-		//out.println(topic);
+		out.println(topic);
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name='"+topic+"';");
 		int id=-1;
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("topic_id");
-	        //out.println("topic id:"+id);
+	        out.println("topic id:"+id);
 	         return id;
 	      }
 		return id;
@@ -183,12 +187,13 @@ public class InsertData extends HttpServlet {
 	
 	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException {
 		out.println("inside law desc");
-		for (int i = 3; i < curRow.length; i++) {
+		for (int i = 4; i < curRow.length; i++) {
 			
 			
 			//out.println(law_id);
 			//law_id++;
-			curRow[i] = curRow[i].replace("'","''");
+			//curRow[i] = curRow[i].replace("'","''");
+			curRow[i] = curRow[i].replaceAll("\'", "");
 			
 			if(i==3)
 			{
@@ -196,6 +201,7 @@ public class InsertData extends HttpServlet {
 				int id1= getTopicId(curRow[0], out);
 				stmt = conn.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
+				
 			}
 			else
 			{
@@ -210,13 +216,14 @@ public class InsertData extends HttpServlet {
 	
 	
 	public int getstateId(String state, PrintWriter out) throws SQLException{
+		out.println(state);
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select state_id from State where state_name='"+state+"';");
 		int id=-1;
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("state_id");
-	         //out.println(id);
+	         out.println("subtopicid"+id);
 	         return id;
 	      }
 		return id;
