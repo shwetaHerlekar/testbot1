@@ -111,7 +111,7 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(conn,cRow[0]);
              	   //insertSubTopic(conn, cRow[1], cRow[0], out);
              	   //insertState(conn, headers, "US", out);
-             	   insertLawDesc(conn, headers, cRow, out);
+             	   insertLawDesc(headers, cRow, out);
                 }
                 else
                 {
@@ -183,7 +183,7 @@ public class InsertData extends HttpServlet {
 		
 	}
 	
-	public void insertLawDesc(Connection conn, String[] headers, String[] curRow,PrintWriter out) throws SQLException {
+	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException, ClassNotFoundException {
 		out.println("inside law desc");
 		for (int i = 3; i < curRow.length; i++) {
 			
@@ -192,21 +192,25 @@ public class InsertData extends HttpServlet {
 			out.println(conn.isClosed());
 			law_id++;
 			//insertQuestion(conn, curRow[2], law_id, out);
-			/*if(i==3)
+			if(i==3)
 			{
 				int id = 1;
 				int id1= getTopicId(conn, curRow[0], out);
+				conn = createDBConnection();
 				stmt = conn.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
+				conn.close();
 			}
 			else
 			{
 				int id = 1;
 				int id1 = getstateId(conn, headers[i], out);
 				int id2 = getTopicId(conn, curRow[0], out);
+				conn = createDBConnection();
 				stmt = conn.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
-			}*/
+				conn.close();
+			}
 		}
 		
 	}
