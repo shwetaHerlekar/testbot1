@@ -118,7 +118,7 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                	if(RowCount<2){
+                	if(RowCount<3){
                 		insertLawDesc(headers, cRow, out);
                 	}
              	   //insertQuestion(cRow[2], cRow[0], cRow[1], out);
@@ -153,8 +153,9 @@ public class InsertData extends HttpServlet {
 		Connection conn1 = createDBConnection();
 		Statement stmt = conn1.createStatement();
 		int t = stmt.executeUpdate("insert into Topics(topic_name) Values('"+topic+"')");
+		stmt.close();
 		conn1.close();
-		stmt = null;
+		
 	}
 	
 	public void insertSubTopic(String subtopic, String topic,PrintWriter out) throws SQLException, ClassNotFoundException {
@@ -164,7 +165,7 @@ public class InsertData extends HttpServlet {
 		//out.println(subtopic);
 		int t = stmt.executeUpdate("insert into SubTopics(sub_topic_name,topic_id) Values('"+subtopic+"','"+topic_id+"')");
 		conn1.close();
-		stmt = null;
+		
 	}
 	
 	public int getTopicId(String topic, PrintWriter out) throws SQLException, ClassNotFoundException{
