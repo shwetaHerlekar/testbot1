@@ -185,7 +185,7 @@ public class InsertData extends HttpServlet {
 		
 	}
 	
-	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException {
+	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException, ClassNotFoundException {
 		out.println("inside law desc");
 		for (int i = 4; i < curRow.length; i++) {
 			
@@ -208,8 +208,10 @@ public class InsertData extends HttpServlet {
 				int id = 1;
 				int id1 = getstateId(headers[i], out);
 				int id2 = getTopicId(curRow[0], out);
-				stmt = conn.createStatement();
+				Connection conn1 = createDBConnection();
+				stmt = conn1.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
+				conn1.close();
 			}
 		}
     }
