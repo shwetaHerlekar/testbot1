@@ -1,8 +1,8 @@
 package com.example;
 
 import org.apache.poi.ss.usermodel.*;
-
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.mortbay.log.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,12 +19,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.logging.Logger;
 
 /**
  * Servlet implementation class InsertData
  */
 public class InsertData extends HttpServlet {
+	private static final Logger log = Logger.getLogger(InsertData.class.getName());
 	private static final long serialVersionUID = 1L;
 	static String JDBC_DRIVER = "com.mysql.jdbc.GoogleDriver";  
 	static String DB_URL = "";
@@ -168,6 +170,7 @@ public class InsertData extends HttpServlet {
 	public int getTopicId(String topic, PrintWriter out) throws SQLException, ClassNotFoundException{
 		
 		out.println(topic);
+		log.info(topic);
 		Connection conn1 = createDBConnection();
 		Statement stmt = conn1.createStatement();
 		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name='"+topic+"';");
@@ -224,6 +227,7 @@ public class InsertData extends HttpServlet {
 				int id = 1;
 				int id1 = getstateId(headers[i], out);
 				int id2 = getTopicId(curRow[0], out);
+				log.info("id2:"+id2);
 				Connection conn1 = createDBConnection();
 				Statement stmt = conn1.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
