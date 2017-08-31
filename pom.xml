@@ -8,7 +8,7 @@
   <INSTANCE_CONNECTION_NAME>poc-iot:asia-east1:instance01</INSTANCE_CONNECTION_NAME>
     <user>root</user>
     <password>root</password>
-    <database>eyChatDB1</database>
+    <database>eyChatDB</database>
   </properties>
 <dependencies>
   <dependency>

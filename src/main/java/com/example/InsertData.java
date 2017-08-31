@@ -108,8 +108,13 @@ public class InsertData extends HttpServlet {
                 if(!firstRow){
              	   insertTopic(conn,cRow[0]);
              	   insertSubTopic(conn, cRow[1], cRow[0], out);
-             	   insertState(conn, headers, "US", out);
+             	   //insertState(conn, headers, "US", out);
              	   insertLawDesc(conn, headers, cRow, out);
+                }
+                else
+                {
+                	insertState(conn, headers, "US", out);
+                	
                 }
                firstRow = false;
                //System.out.println(cRow[0]);
