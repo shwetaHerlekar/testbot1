@@ -215,7 +215,7 @@ public class InsertData extends HttpServlet {
 				int id2 = getTopicId(conn, curRow[0], out);
 				stmt = conn.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
-				out.println(i);
+				out.println("t val:"+t);
 				conn.close();
 			}
 		}
