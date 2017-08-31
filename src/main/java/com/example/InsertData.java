@@ -158,13 +158,14 @@ public class InsertData extends HttpServlet {
 	}
 	
 	public int getTopicId(Connection conn, String topic, PrintWriter out) throws SQLException{
+		
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name='"+topic+"';");
 		int id=-1;
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("topic_id");
-	         //out.println(id);
+	         out.println("topic id:"+id);
 	         return id;
 	      }
 		return id;
@@ -191,7 +192,7 @@ public class InsertData extends HttpServlet {
 			//out.println(curRow[i]);
 			out.println(law_id);
 			out.println(conn.isClosed());
-			curRow[i] = curRow[i].replaceAll("\'", "");
+			curRow[i] = curRow[i].replaceAll("\'", "").replaceAll("\"", "").replaceAll("\n", "").replaceAll("\t", "");
 			law_id++;
 			//insertQuestion(conn, curRow[2], law_id, out);
 			if(i==3)
@@ -205,13 +206,13 @@ public class InsertData extends HttpServlet {
 			}
 			else
 			{
-				int id = 1;
+				/*int id = 1;
 				conn = createDBConnection();
 				int id1 = getstateId(conn, headers[i], out);
 				int id2 = getTopicId(conn, curRow[0], out);
 				stmt = conn.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
-				conn.close();
+				conn.close();*/
 			}
 		}
 		
