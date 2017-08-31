@@ -233,7 +233,7 @@ public class InsertData extends HttpServlet {
 		stmt = conn.createStatement();
 		int uid = 1;
 		String sql = "insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,sub_topic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')";
-		out.println(question);
+		out.println(sql);
 		int t = stmt.executeUpdate(sql);	
 	}
 	
