@@ -77,7 +77,6 @@ public class InsertData extends HttpServlet {
             while (iterator.hasNext()) {
             	
             	index = 0;
-            	RowCount++;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 //out.println("inside main while");
@@ -118,9 +117,10 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                	if(RowCount<4)
+                	if(RowCount<2)
                 	{
                 		insertLawDesc(headers, cRow, out);
+				RowCount++;
                 	}
                 	
              	   //insertQuestion(cRow[2], cRow[0], cRow[1], out);
@@ -173,7 +173,7 @@ public class InsertData extends HttpServlet {
 	public int getTopicId(String topic, PrintWriter out) throws SQLException, ClassNotFoundException{
 		
 		//out.println(topic);
-		log.info(topic);
+		//log.info(topic);
 		Connection conn1 = createDBConnection();
 		Statement stmt = conn1.createStatement();
 		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name='"+topic+"';");
@@ -216,6 +216,8 @@ public class InsertData extends HttpServlet {
 			
 			if(i==3)
 			{
+				log.info("federal");
+				log.info("i :"+i);
 				int id = 1;
 				int id1= getTopicId(curRow[0], out);
 				Connection conn1 = createDBConnection();
@@ -230,7 +232,8 @@ public class InsertData extends HttpServlet {
 				int id = 1;
 				int id1 = getstateId(headers[i], out);
 				int id2 = getTopicId(curRow[0], out);
-				log.info("id2:"+id2);
+				log.info("i :"+i);
+				//log.info("id2:"+id2);
 				Connection conn1 = createDBConnection();
 				Statement stmt = conn1.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
@@ -244,6 +247,7 @@ public class InsertData extends HttpServlet {
 	
 	public int getstateId(String state, PrintWriter out) throws SQLException, ClassNotFoundException{
 		//out.println(state);
+		log.info(state);
 		Connection conn1 = createDBConnection();
 		Statement stmt = conn1.createStatement();
 		ResultSet rs = stmt.executeQuery("select state_id from State where state_name='"+state+"';");
