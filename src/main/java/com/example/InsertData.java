@@ -118,7 +118,10 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                	insertLawDesc(headers, cRow, out);
+                	if(RowCount<3)
+                	{
+                		insertLawDesc(headers, cRow, out);
+                	}
                 	
              	   //insertQuestion(cRow[2], cRow[0], cRow[1], out);
                 }
@@ -169,7 +172,7 @@ public class InsertData extends HttpServlet {
 	
 	public int getTopicId(String topic, PrintWriter out) throws SQLException, ClassNotFoundException{
 		
-		out.println(topic);
+		//out.println(topic);
 		log.info(topic);
 		Connection conn1 = createDBConnection();
 		Statement stmt = conn1.createStatement();
@@ -178,7 +181,7 @@ public class InsertData extends HttpServlet {
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("topic_id");
-	        out.println("topic id:"+id);
+	        //out.println("topic id:"+id);
 	        rs.close();
 	        stmt.close();
 	        conn1.close();
@@ -240,7 +243,7 @@ public class InsertData extends HttpServlet {
 	
 	
 	public int getstateId(String state, PrintWriter out) throws SQLException, ClassNotFoundException{
-		out.println(state);
+		//out.println(state);
 		Connection conn1 = createDBConnection();
 		Statement stmt = conn1.createStatement();
 		ResultSet rs = stmt.executeQuery("select state_id from State where state_name='"+state+"';");
@@ -248,7 +251,7 @@ public class InsertData extends HttpServlet {
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("state_id");
-	         out.println("subtopicid"+id);
+	         //out.println("subtopicid"+id);
 	         rs.close();
 		     stmt.close();
 	         conn1.close();
@@ -265,7 +268,7 @@ public class InsertData extends HttpServlet {
 		int id=-1;
 		while(rs.next()){
 	         //Retrieve by column name
-	         id  = rs.getInt("sub_topic_id");
+	         //id  = rs.getInt("sub_topic_id");
 	         //out.println(id);
 	         rs.close();
 		     stmt.close();
