@@ -195,8 +195,8 @@ public class InsertData extends HttpServlet {
 			if(i==3)
 			{
 				int id = 1;
-				int id1= getTopicId(conn, curRow[0], out);
 				conn = createDBConnection();
+				int id1= getTopicId(conn, curRow[0], out);
 				stmt = conn.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
 				conn.close();
@@ -204,9 +204,9 @@ public class InsertData extends HttpServlet {
 			else
 			{
 				int id = 1;
+				conn = createDBConnection();
 				int id1 = getstateId(conn, headers[i], out);
 				int id2 = getTopicId(conn, curRow[0], out);
-				conn = createDBConnection();
 				stmt = conn.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
 				conn.close();
