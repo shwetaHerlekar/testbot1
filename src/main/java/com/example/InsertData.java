@@ -186,12 +186,12 @@ public class InsertData extends HttpServlet {
 	}
 	
 	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException, ClassNotFoundException {
-		out.println("inside law desc");
+		out.println("curRow.length");
 		for (int i = 3; i < curRow.length; i++) {
 			
 			//out.println(curRow[i]);
-			out.println(law_id);
-			out.println(conn.isClosed());
+			//out.println(law_id);
+			//out.println(conn.isClosed());
 			curRow[i] = curRow[i].replaceAll("\'", "").replaceAll("\"", "").replaceAll("\n", "").replaceAll("\t", "");
 			law_id++;
 			//insertQuestion(conn, curRow[2], law_id, out);
