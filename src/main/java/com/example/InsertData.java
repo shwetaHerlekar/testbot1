@@ -190,6 +190,7 @@ public class InsertData extends HttpServlet {
 			//out.println(curRow[i]);
 			out.println(law_id);
 			out.println(conn.isClosed());
+			curRow[i] = curRow[i].replace("'", "''");
 			law_id++;
 			//insertQuestion(conn, curRow[2], law_id, out);
 			if(i==3)
