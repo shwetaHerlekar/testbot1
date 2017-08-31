@@ -230,15 +230,6 @@ public class InsertData extends HttpServlet {
 		return id;
 	}
 	
-	public void insertQuestion(Connection conn, String question, int law_id1,PrintWriter out) throws SQLException {
-		stmt = conn.createStatement();
-		//int topic_id = getTopicId(conn, country, out);
-		stmt = conn.createStatement();
-		out.println(question);
-		int uid = 1;
-		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,law_desc_id,questions_type,User_id) Values('"+question+"','"+law_id1+"','SYSTEM','"+uid+"')");	
-	}
-	
 	public int getSubTopicId(Connection conn, String subtopic, PrintWriter out) throws SQLException{
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select sub_topic_id from SubTopics where sub_topic_name='"+subtopic+"';");
