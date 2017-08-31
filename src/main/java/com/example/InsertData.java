@@ -155,13 +155,14 @@ public class InsertData extends HttpServlet {
 	
 	public int getTopicId(String topic, PrintWriter out) throws SQLException{
 		
+		out.println(topic);
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name='"+topic+"';");
 		int id=-1;
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("topic_id");
-	        // out.println("topic id:"+id);
+	        out.println("topic id:"+id);
 	         return id;
 	      }
 		return id;
@@ -212,13 +213,14 @@ public class InsertData extends HttpServlet {
 	} */
 	
 	public int getSubTopicId(String subtopic, PrintWriter out) throws SQLException{
+		out.println(subtopic);
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select sub_topic_id from SubTopics where sub_topic_name='"+subtopic+"';");
 		int id=-1;
 		while(rs.next()){
 	         //Retrieve by column name
 	         id  = rs.getInt("sub_topic_id");
-	         //out.println(id);
+	         out.println(id);
 	         return id;
 	      }
 		return id;
@@ -226,14 +228,12 @@ public class InsertData extends HttpServlet {
 	
 	public void insertQuestion(Connection conn, String question, String topic,String subtopic,PrintWriter out) throws SQLException {
 		question = question.replaceAll("\'", "");
-		out.println("inside question");
-		stmt = conn.createStatement();
 		int topic_id = getTopicId(topic, out);
 		int sub_topic_id = getSubTopicId(subtopic, out);
 		stmt = conn.createStatement();
 		int uid = 1;
 		String sql = "insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,sub_topic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')";
-		out.println(sql);
+		//out.println(sql);
 		int t = stmt.executeUpdate(sql);	
 	}
 	
