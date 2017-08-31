@@ -1,6 +1,7 @@
 package com.example;
 
 import org.apache.poi.ss.usermodel.*;
+
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
@@ -18,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.logging.Logger;
 
 /**
  * Servlet implementation class InsertData
@@ -174,8 +176,9 @@ public class InsertData extends HttpServlet {
 	         //Retrieve by column name
 	         id  = rs.getInt("topic_id");
 	        out.println("topic id:"+id);
+	        rs.close();
+	        stmt.close();
 	        conn1.close();
-	        stmt = null;
 	         return id;
 	      }
 		return id;
@@ -212,8 +215,9 @@ public class InsertData extends HttpServlet {
 				Connection conn1 = createDBConnection();
 				Statement stmt = conn1.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
+				stmt.close();;
 				conn1.close();
-				stmt = null;
+				
 			}
 			else
 			{
@@ -223,8 +227,9 @@ public class InsertData extends HttpServlet {
 				Connection conn1 = createDBConnection();
 				Statement stmt = conn1.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
+				stmt.close();
 				conn1.close();
-				stmt = null;
+				
 			}
 		}
     }
@@ -240,8 +245,9 @@ public class InsertData extends HttpServlet {
 	         //Retrieve by column name
 	         id  = rs.getInt("state_id");
 	         out.println("subtopicid"+id);
+	         rs.close();
+		     stmt.close();
 	         conn1.close();
-	         stmt = null;
 	         return id;
 	      }
 		return id;
@@ -257,8 +263,9 @@ public class InsertData extends HttpServlet {
 	         //Retrieve by column name
 	         id  = rs.getInt("sub_topic_id");
 	         //out.println(id);
+	         rs.close();
+		     stmt.close();
 	         conn1.close();
-	         stmt = null;
 	         return id;
 	      }
 		return id;
