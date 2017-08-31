@@ -114,7 +114,7 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                	if(RowCount<2){
+                	if(RowCount<3){
                 		insertLawDesc(headers, cRow, out);
                 	}
              	   //insertQuestion(conn, cRow[2], cRow[0], cRow[1], out);
@@ -187,7 +187,7 @@ public class InsertData extends HttpServlet {
 	
 	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException, ClassNotFoundException {
 		out.println("inside law desc");
-		for (int i = 4; i < curRow.length; i++) {
+		for (int i = 3; i < curRow.length; i++) {
 			
 			
 			//out.println(law_id);
