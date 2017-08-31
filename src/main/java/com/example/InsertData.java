@@ -255,4 +255,11 @@ public class InsertData extends HttpServlet {
 		int uid = 1;
 		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,subtopic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')");	
 	}
+	
+	public Connection createDBConnection() throws ClassNotFoundException, SQLException{
+		Class.forName(JDBC_DRIVER);
+		DB_URL = System.getProperty("ae-cloudsql.cloudsql-database-url");
+
+		return conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	}
 }
