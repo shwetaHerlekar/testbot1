@@ -253,13 +253,13 @@ public class InsertData extends HttpServlet {
 	} 
 	
 	public void insertQuestion(Connection conn, String question, String topic,String subtopic,PrintWriter out) throws SQLException {
+		question = question.replace("'", "\'");
+		question = question.replace('\"', '\"');
+		out.println(question);
 		stmt = conn.createStatement();
 		int topic_id = getTopicId(conn, topic, out);
 		int sub_topic_id = getSubTopicId(conn, subtopic, out);
 		stmt = conn.createStatement();
-		out.println(question);
-		question = question.replace("'", "\'");
-		question = question.replace('\"', '\"');
 		int uid = 1;
 		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,sub_topic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')");	
 	}
