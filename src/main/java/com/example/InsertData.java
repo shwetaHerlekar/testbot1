@@ -259,7 +259,7 @@ public class InsertData extends HttpServlet {
 		stmt = conn.createStatement();
 		out.println(question);
 		int uid = 1;
-		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,subtopic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')");	
+		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,sub_topic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')");	
 	}
 	
 	public Connection createDBConnection() throws ClassNotFoundException, SQLException{
