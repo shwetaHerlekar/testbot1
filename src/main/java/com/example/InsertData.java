@@ -111,8 +111,8 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(conn,cRow[0]);
              	   //insertSubTopic(conn, cRow[1], cRow[0], out);
              	   //insertState(conn, headers, "US", out);
-             	   //insertLawDesc(headers, cRow, out);
-             	   insertQuestion(conn, cRow[2], cRow[1], cRow[2], out);
+             	   insertLawDesc(headers, cRow, out);
+             	   //insertQuestion(conn, cRow[2], cRow[1], cRow[2], out);
                 }
                 else
                 {
@@ -191,7 +191,7 @@ public class InsertData extends HttpServlet {
 			//out.println(curRow[i]);
 			out.println(law_id);
 			out.println(conn.isClosed());
-			curRow[i] = curRow[i].replace("'", "''");
+			curRow[i] = curRow[i].replaceAll("\'", "");
 			law_id++;
 			//insertQuestion(conn, curRow[2], law_id, out);
 			if(i==3)
