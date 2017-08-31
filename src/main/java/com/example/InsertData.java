@@ -74,9 +74,11 @@ public class InsertData extends HttpServlet {
             	index = 0;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
+                out.println("inside main while");
 
                 while (cellIterator.hasNext()) {
                 	
+                	out.println("inside second while");
                     Cell currentCell = cellIterator.next();
                     //getCellTypeEnum shown as deprecated for version 3.15
                     //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
@@ -111,8 +113,13 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(conn,cRow[0]);
              	   //insertSubTopic(conn, cRow[1], cRow[0], out);
              	   //insertState(conn, headers, "US", out);
-                	out.println("running");
-             	   insertLawDesc(headers, cRow, out);
+                	
+                	for (int i = 3; i < cRow.length; i++) {
+                		out.println(cRow[i]);
+                		out.println("-----");
+					}
+                	out.println("/////////////////////////////////////");
+             	   //insertLawDesc(headers, cRow, out);
              	   //insertQuestion(conn, cRow[2], cRow[1], cRow[2], out);
                 }
                 else
