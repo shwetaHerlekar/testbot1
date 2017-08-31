@@ -228,13 +228,14 @@ public class InsertData extends HttpServlet {
 	
 	public void insertQuestion(Connection conn, String question, String topic,String subtopic,PrintWriter out) throws SQLException {
 		question = question.replaceAll("\'", "");
-		int topic_id = getTopicId(topic, out);
+		out.println(question);
+		/*int topic_id = getTopicId(topic, out);
 		int sub_topic_id = getSubTopicId(subtopic, out);
 		stmt = conn.createStatement();
 		int uid = 1;
 		String sql = "insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,sub_topic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')";
 		//out.println(sql);
-		int t = stmt.executeUpdate(sql);	
+		int t = stmt.executeUpdate(sql);	*/
 	}
 	
 	public Connection createDBConnection() throws ClassNotFoundException, SQLException{
