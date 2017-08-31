@@ -117,7 +117,7 @@ public class InsertData extends HttpServlet {
                 }
                 else
                 {
-                	//insertState(conn, headers, "US", out);
+                	insertState(headers, "US", out);
                 	
                 }
                firstRow = false;
