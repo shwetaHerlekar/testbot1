@@ -133,8 +133,8 @@ public class InsertData extends HttpServlet {
 		} catch (Exception e) {
 			out.print("exception!!");
 			out.print(e);
-			System.out.println("exception!!");
-			e.printStackTrace();
+			//System.out.println("exception!!");
+			//e.printStackTrace();
 		}
 	  out.println("Good Bye!!");
 	}
@@ -197,11 +197,10 @@ public class InsertData extends HttpServlet {
 	}
 	
 	public void insertStateLaw(String desc) throws SQLException, ClassNotFoundException {
-		conn = createDBConnection();
-		stmt = conn.createStatement();
-		int t = stmt.executeUpdate("insert into Law_Description(law_description) Values('"+desc+"')");
-		conn.close();
-		conn = null;
+		Connection conn1 = createDBConnection();
+		stmt = conn1.createStatement();
+		int t = stmt.executeUpdate("insert into Law_Description(law_description) Values('"+desc+"');");
+		conn1.close();
 	}
 	
 	
