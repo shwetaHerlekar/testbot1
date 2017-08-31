@@ -56,7 +56,7 @@ public class InsertData extends HttpServlet {
 			//System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);*/
 			
-			conn = createDBConnection();
+			//conn = createDBConnection();
 			
 			String path = InsertData.class.getResource("/sample_data.xlsx").getPath();
 			FileInputStream excelFile = new FileInputStream(new File(path));
@@ -114,7 +114,7 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                	if(RowCount<3){
+                	if(RowCount<4){
                 		insertLawDesc(headers, cRow, out);
                 	}
              	   //insertQuestion(conn, cRow[2], cRow[0], cRow[1], out);
@@ -199,9 +199,10 @@ public class InsertData extends HttpServlet {
 			{
 				int id = 1;
 				int id1= getTopicId(curRow[0], out);
-				stmt = conn.createStatement();
+				Connection conn1 = createDBConnection();
+				stmt = conn1.createStatement();
 				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
-				
+				conn1.close();
 			}
 			else
 			{
@@ -214,6 +215,7 @@ public class InsertData extends HttpServlet {
 				conn1.close();
 			}
 		}
+		conn.close();
     }
 	
 	
@@ -260,7 +262,6 @@ public class InsertData extends HttpServlet {
 	public Connection createDBConnection() throws ClassNotFoundException, SQLException{
 		Class.forName(JDBC_DRIVER);
 		DB_URL = System.getProperty("ae-cloudsql.cloudsql-database-url");
-
-		return conn = DriverManager.getConnection(DB_URL, USER, PASS);
+		return DriverManager.getConnection(DB_URL, USER, PASS);
 	}
 }
