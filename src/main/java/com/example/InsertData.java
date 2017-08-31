@@ -118,9 +118,8 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                	if(RowCount<3){
-                		insertLawDesc(headers, cRow, out);
-                	}
+                	insertLawDesc(headers, cRow, out);
+                	
              	   //insertQuestion(cRow[2], cRow[0], cRow[1], out);
                 }
                 else
