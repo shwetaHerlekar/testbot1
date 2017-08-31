@@ -6,8 +6,17 @@
   <threadsafe>true</threadsafe>
     <system-properties>
        <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
-       <property name="ae-cloudsql.cloudsql-database-url" value="jdbc:google:mysql://poc-iot:asia-east1:instance01/eyChatDB?user=root&amp;password=root" />
+       <property name="ae-cloudsql.cloudsql-database-url" value="jdbc:google:mysql://poc-iot:asia-east1:instance01/eyChatDB1?user=root&amp;password=root" />
        <property name="ae-cloudsql.local-database-url" value="jdbc:mysql://google/${database}?cloudSqlInstance=dummyproject-05042017:asia-east1:instance01&amp;socketFactory=com.google.cloud.sql.mysql.SocketFactory&amp;user=${user}&amp;password=${password}&amp;useSSL=false" />
     </system-properties>
    <use-google-connector-j>true</use-google-connector-j>
+   <automatic-scaling>
+    <min-idle-instances>5</min-idle-instances>
+    <!-- ‘automatic’ is the default value. -->
+    <max-idle-instances>automatic</max-idle-instances>
+    <!-- ‘automatic’ is the default value. -->
+    <min-pending-latency>30ms</min-pending-latency>
+    <max-pending-latency>automatic</max-pending-latency>
+    <max-concurrent-requests>50</max-concurrent-requests>
+  </automatic-scaling>
 </appengine-web-app>

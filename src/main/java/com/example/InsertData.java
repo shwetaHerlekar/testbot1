@@ -56,7 +56,7 @@ public class InsertData extends HttpServlet {
 			//System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);*/
 			
-			//conn = createDBConnection();
+			conn = createDBConnection();
 			
 			String path = InsertData.class.getResource("/sample_data.xlsx").getPath();
 			FileInputStream excelFile = new FileInputStream(new File(path));
@@ -80,8 +80,7 @@ public class InsertData extends HttpServlet {
                 	
                 	out.println("inside second while");
                     Cell currentCell = cellIterator.next();
-                    //getCellTypeEnum shown as deprecated for version 3.15
-                    //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
+                    
                     if (currentCell.getCellTypeEnum() == CellType.STRING) {
                     	
                         //System.out.print(currentCell.getStringCellValue() + "--");
@@ -110,16 +109,10 @@ public class InsertData extends HttpServlet {
                     }
                 }
                 if(!firstRow){
-             	   //insertTopic(conn,cRow[0]);
-             	   //insertSubTopic(conn, cRow[1], cRow[0], out);
-             	   //insertState(conn, headers, "US", out);
-                	
-                	for (int i = 3; i < cRow.length; i++) {
-                		out.println(cRow[i]);
-                		out.println("-----");
-					}
-                	out.println("/////////////////////////////////////");
-             	   //insertLawDesc(headers, cRow, out);
+             	   insertTopic(cRow[0]);
+             	   insertSubTopic(cRow[1], cRow[0], out);
+             	   
+                   //insertLawDesc(headers, cRow, out);
              	   //insertQuestion(conn, cRow[2], cRow[1], cRow[2], out);
                 }
                 else
@@ -128,14 +121,9 @@ public class InsertData extends HttpServlet {
                 	
                 }
                firstRow = false;
-               //System.out.println(cRow[0]);
                
             }
             
-            /*for (int i = 0; i < headers.length; i++) {
-				System.out.println(headers[i]);
-			}
-            System.out.println("colsize : "+headers.length);*/
 			
 		} catch (Exception e) {
 			out.print("exception!!");
@@ -153,19 +141,19 @@ public class InsertData extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
-	public void insertTopic(Connection conn, String topic) throws SQLException {
+	public void insertTopic(String topic) throws SQLException {
 		stmt = conn.createStatement();
 		int t = stmt.executeUpdate("insert into Topics(topic_name) Values('"+topic+"')");
 	}
 	
-	public void insertSubTopic(Connection conn, String subtopic, String topic,PrintWriter out) throws SQLException {
+	public void insertSubTopic(String subtopic, String topic,PrintWriter out) throws SQLException {
 		stmt = conn.createStatement();
-		int topic_id = getTopicId(conn, topic, out);
+		int topic_id = getTopicId(topic, out);
 		//out.println(subtopic);
 		int t = stmt.executeUpdate("insert into SubTopics(sub_topic_name,topic_id) Values('"+subtopic+"','"+topic_id+"')");
 	}
 	
-	public int getTopicId(Connection conn, String topic, PrintWriter out) throws SQLException{
+	public int getTopicId(String topic, PrintWriter out) throws SQLException{
 		
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select topic_id from Topics where topic_name='"+topic+"';");
@@ -179,10 +167,9 @@ public class InsertData extends HttpServlet {
 		return id;
 	}
 	
-	public void insertState(Connection conn, String[] headers, String country,PrintWriter out) throws SQLException {
+	public void insertState(String[] headers, String country,PrintWriter out) throws SQLException {
 		stmt = conn.createStatement();
 		out.println("inside state");
-		//int topic_id = getTopicId(conn, country, out);
 		
 		for (int i = 5; i < headers.length; i++) {
 			out.println(headers[i]);
@@ -193,7 +180,7 @@ public class InsertData extends HttpServlet {
 		
 	}
 	
-	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException, ClassNotFoundException {
+	/*public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException, ClassNotFoundException {
 		out.println(curRow.length);
 		for (int i = 4; i < curRow.length; i++) {
 			
@@ -248,7 +235,7 @@ public class InsertData extends HttpServlet {
 		stmt = conn.createStatement();
 		int uid = 1;
 		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,sub_topic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')");	
-	}
+	}*/
 	
 	public Connection createDBConnection() throws ClassNotFoundException, SQLException{
 		Class.forName(JDBC_DRIVER);
