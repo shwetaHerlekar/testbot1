@@ -111,7 +111,8 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(conn,cRow[0]);
              	   //insertSubTopic(conn, cRow[1], cRow[0], out);
              	   //insertState(conn, headers, "US", out);
-             	   insertLawDesc(headers, cRow, out);
+             	   //insertLawDesc(headers, cRow, out);
+             	   insertQuestion(conn, cRow[2], cRow[1], cRow[2], out);
                 }
                 else
                 {
