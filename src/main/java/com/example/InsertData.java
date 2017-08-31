@@ -74,11 +74,11 @@ public class InsertData extends HttpServlet {
             	index = 0;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
-                out.println("inside main while");
+                //out.println("inside main while");
 
                 while (cellIterator.hasNext()) {
                 	
-                	out.println("inside second while");
+                	//out.println("inside second while");
                     Cell currentCell = cellIterator.next();
                     
                     if (currentCell.getCellTypeEnum() == CellType.STRING) {
@@ -109,15 +109,15 @@ public class InsertData extends HttpServlet {
                     }
                 }
                 if(!firstRow){
-             	   insertTopic(cRow[0]);
-             	   insertSubTopic(cRow[1], cRow[0], out);
+             	   //insertTopic(cRow[0]);
+             	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
                    //insertLawDesc(headers, cRow, out);
-             	   //insertQuestion(conn, cRow[2], cRow[1], cRow[2], out);
+             	   insertQuestion(conn, cRow[2], cRow[1], cRow[2], out);
                 }
                 else
                 {
-                	insertState(headers, "US", out);
+                	//insertState(headers, "US", out);
                 	
                 }
                firstRow = false;
@@ -209,9 +209,9 @@ public class InsertData extends HttpServlet {
 	         return id;
 	      }
 		return id;
-	}
+	} */
 	
-	public int getSubTopicId(Connection conn, String subtopic, PrintWriter out) throws SQLException{
+	public int getSubTopicId(String subtopic, PrintWriter out) throws SQLException{
 		stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select sub_topic_id from SubTopics where sub_topic_name='"+subtopic+"';");
 		int id=-1;
@@ -222,20 +222,20 @@ public class InsertData extends HttpServlet {
 	         return id;
 	      }
 		return id;
-	} 
+	}
 	
 	public void insertQuestion(Connection conn, String question, String topic,String subtopic,PrintWriter out) throws SQLException {
 		question = question.replaceAll("\'", "");
-		
-		out.println(question);
 		out.println("inside question");
 		stmt = conn.createStatement();
-		int topic_id = getTopicId(conn, topic, out);
-		int sub_topic_id = getSubTopicId(conn, subtopic, out);
+		int topic_id = getTopicId(topic, out);
+		int sub_topic_id = getSubTopicId(subtopic, out);
 		stmt = conn.createStatement();
 		int uid = 1;
-		int t = stmt.executeUpdate("insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,sub_topic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')");	
-	}*/
+		String sql = "insert into QuestionsMgnt(possible_questions,questions_type,User_id,topic_id,sub_topic_id) Values('"+question+"','SYSTEM','"+uid+"','"+topic_id+"','"+sub_topic_id+"')";
+		out.println(question);
+		int t = stmt.executeUpdate(sql);	
+	}
 	
 	public Connection createDBConnection() throws ClassNotFoundException, SQLException{
 		Class.forName(JDBC_DRIVER);
