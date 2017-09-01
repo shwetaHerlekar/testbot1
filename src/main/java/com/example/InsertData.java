@@ -117,11 +117,11 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                	if(RowCount<2)
-                	{
+                	//if(RowCount<2)
+                	//{
                 		insertLawDesc(headers, cRow, out);
-				RowCount++;
-                	}
+				//RowCount++;
+                	//}
                 	
              	   //insertQuestion(cRow[2], cRow[0], cRow[1], out);
                 }
@@ -206,6 +206,7 @@ public class InsertData extends HttpServlet {
 	
 	public void insertLawDesc(String[] headers, String[] curRow,PrintWriter out) throws SQLException, ClassNotFoundException {
 		out.println("inside law desc");
+		log.info("law_desc_raw_cnt :"+law_id);
 		for (int i = 3; i < curRow.length; i++) {
 			
 			
@@ -219,10 +220,10 @@ public class InsertData extends HttpServlet {
 				log.info("federal");
 				log.info("i :"+i);
 				int id = 1;
-				int id1= getTopicId(curRow[0], out);
+				int id1= getSubTopicId(curRow[1], out);
 				Connection conn1 = createDBConnection();
 				Statement stmt = conn1.createStatement();
-				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,country_id,sub_topic_id) Values('"+curRow[i]+"','"+id+"','"+id1+"')");
 				stmt.close();;
 				conn1.close();
 				
@@ -231,12 +232,12 @@ public class InsertData extends HttpServlet {
 			{
 				int id = 1;
 				int id1 = getstateId(headers[i], out);
-				int id2 = getTopicId(curRow[0], out);
+				int id2 = getSubTopicId(curRow[1], out);
 				log.info("i :"+i);
 				//log.info("id2:"+id2);
 				Connection conn1 = createDBConnection();
 				Statement stmt = conn1.createStatement();
-				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
+				int t = stmt.executeUpdate("insert into Law_Description(law_description,state_id,country_id,sub_topic_id) Values('"+curRow[i]+"','"+id1+"','"+id+"','"+id2+"')");
 				stmt.close();
 				conn1.close();
 				
@@ -272,10 +273,10 @@ public class InsertData extends HttpServlet {
 		int id=-1;
 		while(rs.next()){
 	         //Retrieve by column name
-	         //id  = rs.getInt("sub_topic_id");
+	         id  = rs.getInt("sub_topic_id");
 	         //out.println(id);
 	         rs.close();
-		     stmt.close();
+		 stmt.close();
 	         conn1.close();
 	         return id;
 	      }
