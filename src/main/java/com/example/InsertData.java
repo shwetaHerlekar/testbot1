@@ -76,6 +76,8 @@ public class InsertData extends HttpServlet {
            
             while (iterator.hasNext()) {
             	
+            	log.info("row count :"+RowCount);
+            	
             	index = 0;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
@@ -117,11 +119,11 @@ public class InsertData extends HttpServlet {
              	   //insertTopic(cRow[0]);
              	   //insertSubTopic(cRow[1], cRow[0], out);
              	   
-                	//if(RowCount<2)
-                	//{
+                	if(RowCount<2)
+                	{
                 		insertLawDesc(headers, cRow, out);
-				//RowCount++;
-                	//}
+                		RowCount++;
+                	}
                 	
              	   //insertQuestion(cRow[2], cRow[0], cRow[1], out);
                 }
